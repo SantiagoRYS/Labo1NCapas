@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entities.Models;
+
 //using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
