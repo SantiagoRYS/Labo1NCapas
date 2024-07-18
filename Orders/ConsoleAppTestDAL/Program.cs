@@ -3,8 +3,11 @@ using DAL;
 using Entities.Models;
 using System.Linq.Expressions;
 
-CreateAsync().GetAwaiter().GetResult();
-RetreiveAsync().GetAwaiter().GetResult();
+//CreateAsync().GetAwaiter().GetResult();
+//RetreiveAsync().GetAwaiter().GetResult();
+UpdateAsync().GetAwaiter().GetResult();
+
+Console.ReadKey();
 
 static async Task CreateAsync()
 {
@@ -55,4 +58,37 @@ static async Task RetreiveAsync()
             Console.WriteLine($"Error: {Ex.Message}");
         }
     }
+}
+
+static async Task UpdateAsync()
+{
+    //Supuesto: Existe el objeto a modificar
+
+    using (var repository = RepositoryFactory.CreateRepository())
+    {
+        var customerToUpdate = await repository.RetreiveAsync<Customer>(c => c.Id == 69);
+        if (customerToUpdate != null)
+        {
+            customerToUpdate.City = "Cali";
+            customerToUpdate.Country = "Colombia";
+            customerToUpdate.Phone = "+57 3145621864";
+        }
+        try
+        {
+            bool updated = await repository.UpdateAsync(customerToUpdate);
+            if (updated)
+            {
+                Console.WriteLine("Customer updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Customer update failed");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+    
 }
