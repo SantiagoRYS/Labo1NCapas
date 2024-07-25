@@ -5,6 +5,7 @@ using SLC;
 using System.Linq.Expressions; 
 using Microsoft.AspNetCore.Http; 
 using BLL.Exceptions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Services.Controllers
 {
@@ -38,9 +39,26 @@ namespace Services.Controllers
             }
         }
 
-        public Task<ActionResult> DeleteAsync(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _bll.DeleteAsync(id);
+                if (!result)
+                {
+                    return NotFound("Customers not found or deletion failed.");
+                }
+                return NoContent();
+            }
+            catch (CustomerExceptions ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
         }
 
         public async Task<ActionResult<List<Customer>>> GetAll()
