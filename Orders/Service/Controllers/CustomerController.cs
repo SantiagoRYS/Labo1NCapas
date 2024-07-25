@@ -19,9 +19,23 @@ namespace Services.Controllers
             _bll = bll;
         }
 
-        public Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate)
+        [HttpPost]
+        public async Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var customer = await _bll.CreateAsync(toCreate);
+
+                return CreatedAtRoute("RetrieveAsync", new { id = customer.Id }, customer);
+            }
+            catch (CustomerExceptions ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
         }
 
         public Task<ActionResult> DeleteAsync(int id)
