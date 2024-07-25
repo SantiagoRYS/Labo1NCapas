@@ -15,6 +15,6 @@ namespace SLC
 
         Task<ActionResult> DeleteAsync(int id);
 
-
+        Task<ActionResult<List<Customer>>> GetAll();
     }
 }
