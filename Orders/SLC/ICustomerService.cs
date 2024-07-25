@@ -13,7 +13,7 @@ namespace SLC
     {
         Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate);
 
-        
+        Task<ActionResult> DeleteAsync(int id);
 
 
     }
