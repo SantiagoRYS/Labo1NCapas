@@ -18,5 +18,7 @@ namespace SLC
         Task<ActionResult<List<Customer>>> GetAll();
 
         Task<ActionResult<Customer>> RetrieveAsync(int id);
+
+        Task<ActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate);
     }
 }
