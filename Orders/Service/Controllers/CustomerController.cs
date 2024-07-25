@@ -86,9 +86,27 @@ namespace Services.Controllers
 
         }
 
-        public Task<ActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
         {
-            throw new NotImplementedException();
+            toUpdate.Id = id;
+            try
+            {
+                var result = await _bll.UpdateAsync(toUpdate);
+                if (!result)
+                {
+                    return NotFound("Customers not found or update failed.");
+                }
+                return NoContent();
+            }
+            catch (CustomerExceptions ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
         }
     }
 }
