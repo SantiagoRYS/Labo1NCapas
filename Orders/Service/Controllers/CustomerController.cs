@@ -44,13 +44,32 @@ namespace Services.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
             }
         }
 
-        public Task<ActionResult<Customer>> RetrieveAsync(int id)
+        [HttpGet("{id}", Name = "RetrieveAsync")]
+        public async Task<ActionResult<Customer>> RetrieveAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var customer = await _bll.RetrieveByIDAsync(id);
+                if (customer == null)
+                {
+                    return NotFound("Customer not found");
+                }
+                return Ok(customer);
+            }
+            catch (CustomerExceptions ce)
+            {
+
+                return BadRequest(ce.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
+
         }
 
         public Task<ActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
