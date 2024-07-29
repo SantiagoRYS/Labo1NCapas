@@ -44,7 +44,7 @@ static async Task RetreiveAsync()
         try
         {
             Expression<Func<Customer, bool>> criteria = c => c.FirstName == "Santiago" && c.LastName == "Gonzalez";
-            var Customer = await repository.RetreiveAsync(criteria);
+            var Customer = await repository.RetrieveAsync(criteria);
             if (Customer != null)
             {
                 Console.WriteLine($"Retrived customer: {Customer.FirstName} \t {Customer.LastName} \t City: {Customer.City} \t Country: {Customer.Country}");
@@ -68,7 +68,7 @@ static async Task UpdateAsync()
 
     using (var repository = RepositoryFactory.CreateRepository())
     {
-        var customerToUpdate = await repository.RetreiveAsync<Customer>(c => c.Id == 69);
+        var customerToUpdate = await repository.RetrieveAsync<Customer>(c => c.Id == 69);
         if (customerToUpdate != null)
         {
             customerToUpdate.City = "Cali";
@@ -116,7 +116,7 @@ static async Task DeleteAsync()
     {
         Expression<Func<Customer, bool>> criteria = c => c.Id == 93;
 
-        var customerstoDelete = await repository.RetreiveAsync(criteria);
+        var customerstoDelete = await repository.RetrieveAsync(criteria);
 
         if (customerstoDelete != null)
         {
