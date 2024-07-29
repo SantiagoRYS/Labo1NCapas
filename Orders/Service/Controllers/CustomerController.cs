@@ -79,7 +79,7 @@ namespace Services.Controllers
 
                 return BadRequest(ce.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
             }
