@@ -3,10 +3,10 @@ using DAL;
 using Entities.Models;
 using System.Linq.Expressions;
 
-//CreateAsync().GetAwaiter().GetResult();
-//RetreiveAsync().GetAwaiter().GetResult();
-//UpdateAsync().GetAwaiter().GetResult();
-//FilterAsync().GetAwaiter().GetResult();
+CreateAsync().GetAwaiter().GetResult();
+RetreiveAsync().GetAwaiter().GetResult();
+UpdateAsync().GetAwaiter().GetResult();
+FilterAsync().GetAwaiter().GetResult();
 DeleteAsync().GetAwaiter().GetResult();
 
 Console.ReadKey();

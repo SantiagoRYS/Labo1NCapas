@@ -20,47 +20,10 @@ namespace Services.Controllers
             _bll = bll;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate)
-        {
-            try
-            {
-                var customer = await _bll.CreateAsync(toCreate);
+        
 
-                return CreatedAtRoute("RetrieveAsync", new { id = customer.Id }, customer);
-            }
-            catch (CustomerExceptions ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
-            }
-        }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
-        {
-            try
-            {
-                var result = await _bll.DeleteAsync(id);
-                if (!result)
-                {
-                    return NotFound("Customers not found or deletion failed.");
-                }
-                return NoContent();
-            }
-            catch (CustomerExceptions ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
-            }
-        }
-
+        [HttpGet]
         public async Task<ActionResult<List<Customer>>> GetAll()
         {
             try
@@ -76,6 +39,25 @@ namespace Services.Controllers
             catch (Exception ex)
             {
 
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate)
+        {
+            try
+            {
+                var customer = await _bll.CreateAsync(toCreate);
+
+                return CreatedAtRoute("RetrieveAsync", new { id = customer.Id }, customer);
+            }
+            catch (CustomerExceptions ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
             }
         }
@@ -114,6 +96,28 @@ namespace Services.Controllers
                 if (!result)
                 {
                     return NotFound("Customers not found or update failed.");
+                }
+                return NoContent();
+            }
+            catch (CustomerExceptions ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            try
+            {
+                var result = await _bll.DeleteAsync(id);
+                if (!result)
+                {
+                    return NotFound("Customers not found or deletion failed.");
                 }
                 return NoContent();
             }
