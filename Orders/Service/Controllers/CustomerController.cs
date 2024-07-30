@@ -27,7 +27,7 @@ namespace Services.Controllers
         public async Task<ActionResult<List<Customer>>> GetAll()
         {
             try
-            {
+            { 
                 var result = await _bll.RetrieveAllAsync();
                 return Ok(result);
             }
