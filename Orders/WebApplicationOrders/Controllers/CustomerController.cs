@@ -49,5 +49,52 @@ namespace WebApplicationOrders.Controllers
         }
 
 
+        public IActionResult Error(string message)
+        {
+            ViewBag.ErrorMessage = message;
+            return View();
+        }
+
+
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var customer = await _proxy.GetByIdAsync(Id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, FirstName, LastName, City, Country, Phone")] Customer customer)
+        {
+            if (id != customer.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var result = await _proxy.UpdateAsync(id, customer);
+                    if (!result)
+                    {
+                        return RedirectToAction("Error", new { message = "No se puede realizar la edición porque hay duplicidad de nombre con otro Cliente" });
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Error", new {message = ex.Message });
+                }
+            }
+            return View(customer);
+        }
+
+
+
     }
 }
