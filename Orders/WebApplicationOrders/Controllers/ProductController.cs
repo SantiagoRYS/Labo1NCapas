@@ -11,12 +11,12 @@ namespace WebApplicationOrders.Controllers
 
         public ProductController()
         {
-            this._proxy = new CustomerProxy();
+            this._proxy = new ProductProxy();
         }
         public async Task<IActionResult> Index()
         {
-            var customers = await _proxy.GetAllAsync();
-            return View(customers);
+            var product = await _proxy.GetAllAsync();
+            return View(product);
         }
 
         public IActionResult Create()
@@ -27,16 +27,16 @@ namespace WebApplicationOrders.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create([Bind("Id, FirstName, LastName, City, Country, Phone")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id, ProductName, SupplierId, UnitPrice, Package, IsDiscontinued, OrderItems, Supplier")] Product product)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _proxy.CreateAsync(customer);
+                    var result = await _proxy.CreateAsync(product);
                     if (result == null)
                     {
-                        return RedirectToAction("Error", new {message = "El cliente con el mismo nombre y apellido ya existe"});
+                        return RedirectToAction("Error", new {message = "El Producto con el mismo nombre ya existe"});
                     }
                     return RedirectToAction(nameof(Index));
                 }
@@ -45,7 +45,7 @@ namespace WebApplicationOrders.Controllers
                     return RedirectToAction("Error", new { message = ex.Message });
                 }
             }
-            return View(customer);
+            return View(product);
         }
 
 

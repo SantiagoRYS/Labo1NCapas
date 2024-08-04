@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using ProxyServer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProxyServer
 {
-    public class ProductProxy
+    public class ProductProxy : IProductProxy
     {
         private readonly HttpClient _httpClient;
 
