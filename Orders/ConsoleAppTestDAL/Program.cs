@@ -3,11 +3,11 @@ using DAL;
 using Entities.Models;
 using System.Linq.Expressions;
 
-CreateAsync().GetAwaiter().GetResult();
-RetreiveAsync().GetAwaiter().GetResult();
+//CreateAsync().GetAwaiter().GetResult();
+//RetreiveAsync().GetAwaiter().GetResult();
 UpdateAsync().GetAwaiter().GetResult();
-FilterAsync().GetAwaiter().GetResult();
-DeleteAsync().GetAwaiter().GetResult();
+//FilterAsync().GetAwaiter().GetResult();
+//DeleteAsync().GetAwaiter().GetResult();
 
 Console.ReadKey();
 
@@ -68,10 +68,10 @@ static async Task UpdateAsync()
 
     using (var repository = RepositoryFactory.CreateRepository())
     {
-        var customerToUpdate = await repository.RetrieveAsync<Customer>(c => c.Id == 69);
+        var customerToUpdate = await repository.RetrieveAsync<Customer>(c => c.Id == 1);
         if (customerToUpdate != null)
         {
-            customerToUpdate.City = "Cali";
+            customerToUpdate.City = "cucuta";
             customerToUpdate.Country = "Colombia";
             customerToUpdate.Phone = "+57 3145621864";
         }

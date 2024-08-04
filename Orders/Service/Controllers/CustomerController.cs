@@ -1,11 +1,10 @@
-﻿using BLL; 
-using Entities.Models; 
-using Microsoft.AspNetCore.Mvc; 
-using SLC; 
-using System.Linq.Expressions; 
-using Microsoft.AspNetCore.Http; 
+﻿using BLL;
+using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
+using SLC;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
 using BLL.Exceptions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Services.Controllers
 {
@@ -20,14 +19,14 @@ namespace Services.Controllers
             _bll = bll;
         }
 
-        
+
 
 
         [HttpGet]
         public async Task<ActionResult<List<Customer>>> GetAll()
         {
             try
-            { 
+            {
                 var result = await _bll.RetrieveAllAsync();
                 return Ok(result);
             }
@@ -79,7 +78,7 @@ namespace Services.Controllers
 
                 return BadRequest(ce.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error ocurred.");
             }
@@ -87,7 +86,7 @@ namespace Services.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
         {
             toUpdate.Id = id;
             try
@@ -110,7 +109,7 @@ namespace Services.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {

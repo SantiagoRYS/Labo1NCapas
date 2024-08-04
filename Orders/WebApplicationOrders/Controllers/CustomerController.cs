@@ -49,13 +49,6 @@ namespace WebApplicationOrders.Controllers
         }
 
 
-        public IActionResult Error(string message)
-        {
-            ViewBag.ErrorMessage = message;
-            return View();
-        }
-
-
         public async Task<IActionResult> Edit(int Id)
         {
             var customer = await _proxy.GetByIdAsync(Id);
@@ -92,6 +85,23 @@ namespace WebApplicationOrders.Controllers
                 }
             }
             return View(customer);
+        }
+
+        public async Task<IActionResult> Details(int Id)
+        {
+            var customer = await _proxy.GetByIdAsync(Id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return View(customer);
+        }
+
+
+        public IActionResult Error(string message)
+        {
+            ViewBag.ErrorMessage = message;
+            return View();
         }
 
 
