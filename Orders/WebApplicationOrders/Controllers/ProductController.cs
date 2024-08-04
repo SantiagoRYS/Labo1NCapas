@@ -5,11 +5,11 @@ using Entities.Models;
 
 namespace WebApplicationOrders.Controllers
 {
-    public class CustomerController : Controller
+    public class ProductController : Controller
     {
-        private readonly ICustomerProxy _proxy;
+        private readonly IProductProxy _proxy;
 
-        public CustomerController()
+        public ProductController()
         {
             this._proxy = new CustomerProxy();
         }
