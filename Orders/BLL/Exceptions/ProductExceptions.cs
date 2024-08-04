@@ -10,13 +10,13 @@ namespace BLL.Exceptions
     {
         private ProductExceptions(string message) : base(message)
         {
-            //Opcional: agregar constructo logico para logueo o manejo de errores del cliente
+            //Opcional: agregar constructo logico para logueo o manejo de errores del producto
         }
 
 
         public static void ThrowProductAlreadyExistException(string ProductName)
         {
-            throw new ProductExceptions($"A client with the name already exist {ProductName}");
+            throw new ProductExceptions($"A product with the name already exist {ProductName}");
         }
 
         public static void ThrowInvalidProductDataException(string message)
@@ -26,9 +26,9 @@ namespace BLL.Exceptions
 
         public static void ThrowInvalidProductIdException(int id)
         {
-            throw new ProductExceptions($"El ID del cliente '{id}' no es válido.");
+            throw new ProductExceptions($"El ID del producto '{id}' no es válido.");
         }
 
     }
 }
-}
+

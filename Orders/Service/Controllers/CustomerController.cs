@@ -61,7 +61,7 @@ namespace Services.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "RetrieveAsync")]
+        [HttpGet("{id}", Name = "RetrieveCustomerAsync")]
         public async Task<ActionResult<Customer>> RetrieveAsync(int id)
         {
             try
