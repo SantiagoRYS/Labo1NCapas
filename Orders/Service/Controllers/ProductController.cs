@@ -10,11 +10,11 @@ namespace Services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase, ICustomerService
+    public class ProductController : ControllerBase, IProductService
     {
-        private readonly Customers _bll;
+        private readonly Products _bll;
 
-        public CustomerController(Customers bll)
+        public ProductController(Products bll)
         {
             _bll = bll;
         }
@@ -23,14 +23,14 @@ namespace Services.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<Customer>>> GetAll()
+        public async Task<ActionResult<List<Product>>> GetAll()
         {
             try
             {
                 var result = await _bll.RetrieveAllAsync();
                 return Ok(result);
             }
-            catch (CustomerExceptions ex)
+            catch (ProductExceptions ex)
             {
 
                 return BadRequest(ex.Message);
@@ -43,15 +43,15 @@ namespace Services.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Customer>> CreateAsync([FromBody] Customer toCreate)
+        public async Task<ActionResult<Product>> CreateAsync([FromBody] Product toCreate)
         {
             try
             {
-                var customer = await _bll.CreateAsync(toCreate);
+                var product = await _bll.CreateAsync(toCreate);
 
-                return CreatedAtRoute("RetrieveAsync", new { id = customer.Id }, customer);
+                return CreatedAtRoute("RetrieveAsync", new { id = product.Id }, product);
             }
-            catch (CustomerExceptions ex)
+            catch (ProductExceptions ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -62,18 +62,18 @@ namespace Services.Controllers
         }
 
         [HttpGet("{id}", Name = "RetrieveAsync")]
-        public async Task<ActionResult<Customer>> RetrieveAsync(int id)
+        public async Task<ActionResult<Product>> RetrieveAsync(int id)
         {
             try
             {
-                var customer = await _bll.RetrieveByIDAsync(id);
-                if (customer == null)
+                var product = await _bll.RetrieveByIDAsync(id);
+                if (product == null)
                 {
-                    return NotFound("Customer not found");
+                    return NotFound("Product not found");
                 }
-                return Ok(customer);
+                return Ok(product);
             }
-            catch (CustomerExceptions ce)
+            catch (ProductExceptions ce)
             {
 
                 return BadRequest(ce.Message);
@@ -86,7 +86,7 @@ namespace Services.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] Customer toUpdate)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] Product toUpdate)
         {
             toUpdate.Id = id;
             try
@@ -94,11 +94,11 @@ namespace Services.Controllers
                 var result = await _bll.UpdateAsync(toUpdate);
                 if (!result)
                 {
-                    return NotFound("Customers not found or update failed.");
+                    return NotFound("Products not found or update failed.");
                 }
                 return NoContent();
             }
-            catch (CustomerExceptions ex)
+            catch (ProductExceptions ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -116,11 +116,11 @@ namespace Services.Controllers
                 var result = await _bll.DeleteAsync(id);
                 if (!result)
                 {
-                    return NotFound("Customers not found or deletion failed.");
+                    return NotFound("Products not found or deletion failed.");
                 }
                 return NoContent();
             }
-            catch (CustomerExceptions ex)
+            catch (ProductExceptions ex)
             {
                 return BadRequest(ex.Message);
             }
