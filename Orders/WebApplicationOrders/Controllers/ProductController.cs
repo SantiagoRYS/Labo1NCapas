@@ -7,7 +7,7 @@ namespace WebApplicationOrders.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductProxy _proxy;
+        private readonly ProductProxy _proxy;
 
         public ProductController()
         {
@@ -15,8 +15,8 @@ namespace WebApplicationOrders.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var product = await _proxy.GetAllAsync();
-            return View(product);
+            var products = await _proxy.GetAllAsync();
+            return View(products);
         }
 
         public IActionResult Create()

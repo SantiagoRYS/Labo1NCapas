@@ -5,18 +5,18 @@ using Entities.Models;
 
 namespace WebApplicationOrders.Controllers
 {
-    public class CustomerController : Controller
+    public class SupplierController : Controller
     {
-        private readonly CustomerProxy _proxy;
+        private readonly SupplierProxy _proxy;
 
-        public CustomerController()
+        public SupplierController()
         {
-            this._proxy = new CustomerProxy();
+            this._proxy = new SupplierProxy();
         }
         public async Task<IActionResult> Index()
         {
-            var customers = await _proxy.GetAllAsync();
-            return View(customers);
+            var suppliers = await _proxy.GetAllAsync();
+            return View(suppliers);
         }
 
         public IActionResult Create()
@@ -27,16 +27,16 @@ namespace WebApplicationOrders.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Create([Bind("Id, FirstName, LastName, City, Country, Phone")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id, CompanyName, ContactName, ContactTitle, City, Country, Phone, Fax, Products")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _proxy.CreateAsync(customer);
+                    var result = await _proxy.CreateAsync(supplier);
                     if (result == null)
                     {
-                        return RedirectToAction("Error", new {message = "El cliente con el mismo nombre y apellido ya existe"});
+                        return RedirectToAction("Error", new { message = "El Proveedor con el mismo nombre ya existe" });
                     }
                     return RedirectToAction(nameof(Index));
                 }
@@ -45,25 +45,25 @@ namespace WebApplicationOrders.Controllers
                     return RedirectToAction("Error", new { message = ex.Message });
                 }
             }
-            return View(customer);
+            return View(supplier);
         }
 
 
         public async Task<IActionResult> Edit(int Id)
         {
-            var customer = await _proxy.GetByIdAsync(Id);
-            if (customer == null)
+            var supplier = await _proxy.GetByIdAsync(Id);
+            if (supplier == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(supplier);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, FirstName, LastName, City, Country, Phone")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, CompanyName, ContactName, ContactTitle, City, Country, Phone, Fax, Products")] Supplier supplier)
         {
-            if (id != customer.Id)
+            if (id != supplier.Id)
             {
                 return NotFound();
             }
@@ -72,39 +72,39 @@ namespace WebApplicationOrders.Controllers
             {
                 try
                 {
-                    var result = await _proxy.UpdateAsync(id, customer);
+                    var result = await _proxy.UpdateAsync(id, supplier);
                     if (!result)
                     {
-                        return RedirectToAction("Error", new { message = "No se puede realizar la edición porque hay duplicidad de nombre con otro Cliente" });
+                        return RedirectToAction("Error", new { message = "No se puede realizar la edición porque hay duplicidad de nombre con otro proveedor" });
                     }
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Error", new {message = ex.Message });
+                    return RedirectToAction("Error", new { message = ex.Message });
                 }
             }
-            return View(customer);
+            return View(supplier);
         }
 
         public async Task<IActionResult> Details(int Id)
         {
-            var customer = await _proxy.GetByIdAsync(Id);
-            if (customer == null)
+            var supplier = await _proxy.GetByIdAsync(Id);
+            if (supplier == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(supplier);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var customer = await _proxy.GetByIdAsync(id);
-            if (customer == null)
+            var supplier = await _proxy.GetByIdAsync(id);
+            if (supplier == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(supplier);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -116,7 +116,7 @@ namespace WebApplicationOrders.Controllers
                 var result = await _proxy.DeleteAsync(id);
                 if (!result)
                 {
-                    return RedirectToAction("Error", new { message = "No se puede eliminar el cliente porque tiene facturas asociadas." });
+                    return RedirectToAction("Error", new { message = "No se puede eliminar el proveedor porque tiene producto asociadas." });
                 }
                 return RedirectToAction(nameof(Index));
             }
