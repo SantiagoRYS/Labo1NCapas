@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace SLC
 {
-    public interface IProductService
+    public interface ISupplierService
     {
-        Task<ActionResult<Product>> CreateAsync([FromBody] Product toCreate);
+        Task<ActionResult<Supplier>> CreateAsync([FromBody] Supplier toCreate);
 
         Task<IActionResult> DeleteAsync(int id);
 
-        Task<ActionResult<List<Product>>> GetAll();
+        Task<ActionResult<List<Supplier>>> GetAll();
 
-        Task<ActionResult<Product>> RetrieveAsync(int id);
+        Task<ActionResult<Supplier>> RetrieveAsync(int id);
 
-        Task<IActionResult> UpdateAsync(int id, [FromBody] Product toUpdate);
+        Task<IActionResult> UpdateAsync(int id, [FromBody] Supplier toUpdate);
     }
 }
