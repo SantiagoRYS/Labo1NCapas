@@ -1,6 +1,6 @@
 ﻿using BLL.Exceptions;
 using DAL;
-using Entities.Models;
+using ENTITIES.Models;
 using System.Linq.Expressions;
 
 namespace BLL
@@ -13,7 +13,7 @@ namespace BLL
             using (var repository = RepositoryFactory.CreateRepository())
             {
                 // Buscar si el nombre de cliente existe
-                Customer customerSearch = await repository.RetrieveAsync<Customer>(c => c.FirstName == customer.FirstName);
+                Customer customerSearch = await repository.RetrieveAsync<Customer>(c=> c.FirstName == customer.FirstName);
                 if (customerSearch == null)
                 {
                     // No existe, podemos crearlo
@@ -26,9 +26,8 @@ namespace BLL
                     // Podriamos incluso crear una capa de Excepciones
                     // personalizadas y consumirla desde otras  
                     // capas.
-                    CustomerExceptions.ThrowCustomerAlreadyExistException(customerSearch.FirstName, customerSearch.LastName);
+                    CustomerExceptions.ThrowCustomerAlreadyExistsException(customerSearch.FirstName, customerSearch.LastName);
                 }
-                
             }
             return customerResult!;
         }
@@ -70,7 +69,7 @@ namespace BLL
                 {
                     // Podemos implementar alguna lógica para
                     // indicar que no se pudo modificar
-                    CustomerExceptions.ThrowCustomerAlreadyExistException(
+                    CustomerExceptions.ThrowCustomerAlreadyExistsException(
                         customerSearch.FirstName, customerSearch.LastName);
                 }
             }

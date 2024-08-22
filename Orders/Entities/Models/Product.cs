@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore;
 
-namespace Entities.Models;
+namespace ENTITIES.Models;
 
 [Table("Product")]
 //[Index("ProductName", Name = "IndexProductName")]
@@ -28,9 +28,9 @@ public partial class Product
     public bool IsDiscontinued { get; set; }
 
     [InverseProperty("Product")]
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<OrderItem>? OrderItems { get; set; } = new List<OrderItem>();
 
     [ForeignKey("SupplierId")]
     [InverseProperty("Products")]
-    public virtual Supplier Supplier { get; set; } = null!;
+    public virtual Supplier? Supplier { get; set; } = null!;
 }

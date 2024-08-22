@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore;
 
-namespace Entities.Models;
+namespace ENTITIES.Models;
 
 [Table("Supplier")]
 //[Index("Country", Name = "IndexSupplierCountry")]

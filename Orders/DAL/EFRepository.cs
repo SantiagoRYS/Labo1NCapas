@@ -1,5 +1,4 @@
 ﻿using DAL.Datos;
-using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DAL
 {
@@ -17,14 +17,12 @@ namespace DAL
         ApplicationDbContext _context;
 
         //Constructor
-        public EFRepository(ApplicationDbContext context)
+        public EFRepository(ApplicationDbContext _context)
         {
-            this._context = context;
+            this._context = _context;
         }
-
         //Dispose
-        private bool disposedValue;
-
+        private bool _disposedValue;
 
         public async Task<TEntity> CreateAsync<TEntity>(TEntity toCreate) where TEntity : class
         {
@@ -34,10 +32,9 @@ namespace DAL
                 await _context.Set<TEntity>().AddAsync(toCreate);
                 await _context.SaveChangesAsync();
                 Result = toCreate;
-
             }
-            catch (DbException)
-            {
+            catch (DbException) 
+            { 
                 throw;
             }
             return Result;
@@ -53,9 +50,10 @@ namespace DAL
             }
             catch (DbException)
             {
+
                 throw;
             }
-            return Result;  
+            return Result;
         }
 
         public void Dispose()
@@ -75,10 +73,10 @@ namespace DAL
             }
             catch (DbException)
             {
-
                 throw;
             }
             return Result;
+
         }
 
         public async Task<TEntity> RetrieveAsync<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
@@ -106,6 +104,7 @@ namespace DAL
             }
             catch (DbException)
             {
+
                 throw;
             }
             return Result;
