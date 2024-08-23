@@ -19,5 +19,3 @@ namespace SLC
     }
 }
 
-// * Por simplicidad solo estamos agregando pocos métodos, sin embargo, de ser necesario podríamos 
-// * agregar más métodos.

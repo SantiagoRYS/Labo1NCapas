@@ -132,7 +132,5 @@ namespace Services.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
             }
         }
-
-
     }
 }

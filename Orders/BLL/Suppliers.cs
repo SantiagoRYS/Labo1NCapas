@@ -88,7 +88,7 @@ namespace BLL
             var supplier = await RetrieveByIDAsync(id);
             if (supplier != null)
             {
-                // Eliminar el cliente
+                // Eliminar el supplier
                 using (var repository = RepositoryFactory.CreateRepository())
                 {
                     Result = await repository.DeleteAsync(supplier);
